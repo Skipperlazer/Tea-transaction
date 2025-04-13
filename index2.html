@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TEA Protocol - Transaction Checker</title>
+  <script src="https://cdn.jsdelivr.net/npm/ethers/dist/ethers.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f5f5;
+      color: #333;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    h1 {
+      color: #2c3e50;
+    }
+
+    input[type="text"] {
+      padding: 0.5rem;
+      width: 300px;
+      margin-top: 1rem;
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      margin-top: 1rem;
+      background-color: #2980b9;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #1c5980;
+    }
+
+    #result {
+      margin-top: 2rem;
+      font-size: 1.2rem;
+    }
+
+    footer {
+      margin-top: 4rem;
+      font-size: 0.9rem;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <h1>TEA Protocol - Transaction Checker</h1>
+  <p>Enter your wallet address to check your transaction count on the TEA Sepolia network:</p>
+
+  <input type="text" id="walletAddress" placeholder="0x...">
+  <br />
+  <button onclick="getTransactionCount()">Check Transactions</button>
+
+  <div id="result"></div>
+
+  <footer>
+    Created by Skipperlazerr
+  </footer>
+
+  <script>
+    async function getTransactionCount() {
+      const address = document.getElementById("walletAddress").value;
+      const resultDiv = document.getElementById("result");
+
+      if (!ethers.utils.isAddress(address)) {
+        resultDiv.innerHTML = "Invalid wallet address.";
+        return;
+      }
+
+      try {
+        const provider = new ethers.providers.JsonRpcProvider("https://sepolia.infura.io/v3/YOUR_INFURA_PROJECT_ID");
+        const txCount = await provider.getTransactionCount(address);
+        resultDiv.innerHTML = `Transaction count for <b>${address}</b>: ${txCount}`;
+      } catch (err) {
+        resultDiv.innerHTML = `Error fetching data: ${err.message}`;
+      }
+    }
+  </script>
+</body>
+</html>
