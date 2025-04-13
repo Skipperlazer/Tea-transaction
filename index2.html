@@ -74,7 +74,7 @@
       }
 
       try {
-        const provider = new ethers.providers.JsonRpcProvider("https://sepolia.infura.io/v3/YOUR_INFURA_PROJECT_ID");
+        const provider = new ethers.providers.JsonRpcProvider("https://tea-sepolia.g.alchemy.com/public");
         const txCount = await provider.getTransactionCount(address);
         resultDiv.innerHTML = `Transaction count for <b>${address}</b>: ${txCount}`;
       } catch (err) {
